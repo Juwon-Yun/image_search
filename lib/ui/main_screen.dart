@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:search_image_app/data/photo_api.dart';
+import 'package:search_image_app/data/photo_provider.dart';
 import 'package:search_image_app/models/photo.dart';
 import 'package:search_image_app/ui/widget/photo_widget.dart';
 
@@ -14,7 +14,14 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   final _controller = TextEditingController();
 
-  final api = PixabayApi();
+  // MainScreen은 PixabayApi 의존성을 가지고 있는 화면이다.
+  // 분리해줘야함.
+  // 인스턴스 생성을 내부에서 하는것은 지양한다.
+  // 외부에서 생성해서 받아서 사용하는 형태로 수정한다.
+  // final api = PixabayApi();
+
+  // 의존성 분리
+  // 1. 의존성 모듈을 인자로 받는다.
 
   List<Photo> _photos = [];
 
@@ -26,6 +33,8 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final photoProvider = PhotoProvider.of(context);
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -48,8 +57,8 @@ class _MainScreenState extends State<MainScreen> {
                 ),
                 suffixIcon: IconButton(
                   onPressed: () async {
-                    final photos =
-                        await api.fetchImageWithQuery(_controller.text);
+                    final photos = await photoProvider.api
+                        .fetchImageWithQuery(_controller.text);
                     setState(() {
                       _photos = photos;
                     });
@@ -67,7 +76,9 @@ class _MainScreenState extends State<MainScreen> {
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, mainAxisSpacing: 16, crossAxisSpacing: 16),
               itemBuilder: (context, index) {
-                return PhotoWidget(photo: _photos[index]);
+                return PhotoWidget(
+                  photo: _photos[index],
+                );
               },
             ),
           ),

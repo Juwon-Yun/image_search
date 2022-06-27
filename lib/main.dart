@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:search_image_app/data/photo_api.dart';
+import 'package:search_image_app/data/photo_provider.dart';
 import 'package:search_image_app/ui/main_screen.dart';
 
 void main() {
-  runApp(const MainApp());
+  runApp(
+    const MainApp(),
+  );
 }
 
 class MainApp extends StatelessWidget {
@@ -12,7 +16,10 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MainScreen(),
+      home: PhotoProvider(
+        api: PixabayApi(),
+        child: MainScreen(),
+      ),
     );
   }
 }

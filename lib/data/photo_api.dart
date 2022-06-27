@@ -5,9 +5,7 @@ import 'package:http/http.dart' as http;
 
 class PixabayApi {
   final baseUrl = 'https://pixabay.com/api/';
-
   final key = '28295875-bec5cbfe0df05eb894ac5b990';
-
   final apiURI =
       'https://pixabay.com/api/?key=28295875-bec5cbfe0df05eb894ac5b990&q=yellow+flowers&image_type=photo';
 
