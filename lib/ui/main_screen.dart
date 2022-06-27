@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:search_image_app/ui/widget/photo_widget.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -42,15 +43,7 @@ class MainScreen extends StatelessWidget {
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2, mainAxisSpacing: 16, crossAxisSpacing: 16),
               itemBuilder: (context, index) {
-                return Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(16)),
-                      image: DecorationImage(
-                        fit: BoxFit.cover,
-                        image: NetworkImage(
-                            'https://image.bugsm.co.kr/album/images/200/204163/20416361.jpg?version=20220506145216.0'),
-                      )),
-                );
+                return PhotoWidget(photo: ,);
               },
             ),
           ),
