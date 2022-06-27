@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:search_image_app/api/photo_api.dart';
+import 'package:search_image_app/data/photo_api.dart';
 import 'package:search_image_app/models/photo.dart';
 import 'package:search_image_app/ui/widget/photo_widget.dart';
 
@@ -12,8 +12,11 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  List<Photo> _photos = [];
   final _controller = TextEditingController();
+
+  final api = PixabayApi();
+
+  List<Photo> _photos = [];
 
   @override
   void dispose() {
@@ -45,7 +48,8 @@ class _MainScreenState extends State<MainScreen> {
                 ),
                 suffixIcon: IconButton(
                   onPressed: () async {
-                    final photos = await Api.fetch(_controller.text);
+                    final photos =
+                        await api.fetchImageWithQuery(_controller.text);
                     setState(() {
                       _photos = photos;
                     });
