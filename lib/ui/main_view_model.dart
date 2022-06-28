@@ -4,7 +4,9 @@ import 'package:search_image_app/data/photo_api.dart';
 import 'package:search_image_app/models/photo.dart';
 
 class MainViewModel {
-  final PixabayApi api = PixabayApi();
+  final PixabayApi api;
+
+  MainViewModel({required this.api});
 
   final _photoScreenController = StreamController<List<Photo>>()..add([]);
   Stream<List<Photo>> get photoStream => _photoScreenController.stream;

@@ -11,3 +11,5 @@
 
 ### 📖 Review
 PixabayApi 클래스의 의존성을 화면 내부에서 구현하지 않고 InheritedWidget을 상속받아 widget tree에 있는 PixabayApi 클래스를 사용하도록 주입하였다. 
+
+가변 객체인 photo list를 InheritedWidget 내부의 Stream으로 대체하여 코드 리펙토링을 할 수 있었다.

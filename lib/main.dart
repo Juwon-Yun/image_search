@@ -18,7 +18,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: PhotoProvider(
-        mainViewModel: MainViewModel(),
+        mainViewModel: MainViewModel(api: PixabayApi()),
         child: MainScreen(),
       ),
     );
