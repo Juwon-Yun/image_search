@@ -35,7 +35,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final photoProvider = PhotoProvider.of(context);
+    final mainViewModel = PhotoProvider.of(context).mainViewModel;
 
     return Scaffold(
       appBar: AppBar(
@@ -59,7 +59,7 @@ class _MainScreenState extends State<MainScreen> {
                 ),
                 suffixIcon: IconButton(
                   onPressed: () async {
-                    photoProvider.fetch(_controller.text);
+                    mainViewModel.fetch(_controller.text);
 
                     // final photos = await photoProvider.api
                     //     .fetchImageWithQuery(_controller.text);
@@ -73,7 +73,7 @@ class _MainScreenState extends State<MainScreen> {
             ),
           ),
           StreamBuilder<List<Photo>>(
-              stream: photoProvider.photoStream,
+              stream: mainViewModel.photoStream,
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return Center(child: CircularProgressIndicator());
