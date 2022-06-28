@@ -24,7 +24,8 @@ class _MainScreenState extends State<MainScreen> {
   // 1. 의존성 모듈을 인자로 받는다 -> 분리는 되지만 좋은방법은 아니다.
   // 2. InheritedWidget으로 의존성을 주입한다.
 
-  List<Photo> _photos = [];
+  // 불변객체를 Stream을 이용해 제거한다.
+  // List<Photo> _photos = [];
 
   @override
   void dispose() {
@@ -58,31 +59,45 @@ class _MainScreenState extends State<MainScreen> {
                 ),
                 suffixIcon: IconButton(
                   onPressed: () async {
-                    final photos = await photoProvider.api
-                        .fetchImageWithQuery(_controller.text);
-                    setState(() {
-                      _photos = photos;
-                    });
+                    photoProvider.fetch(_controller.text);
+
+                    // final photos = await photoProvider.api
+                    //     .fetchImageWithQuery(_controller.text);
+                    // setState(() {
+                    //   _photos = photos;
+                    // });
                   },
                   icon: Icon(CupertinoIcons.search),
                 ),
               ),
             ),
           ),
-          Expanded(
-            child: GridView.builder(
-              padding: EdgeInsets.all(16),
-              itemCount: _photos.length,
-              // shrinkWrap: true를 쓸지 Expanded를 쓸지 선택
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, mainAxisSpacing: 16, crossAxisSpacing: 16),
-              itemBuilder: (context, index) {
-                return PhotoWidget(
-                  photo: _photos[index],
+          StreamBuilder<List<Photo>>(
+              stream: photoProvider.photoStream,
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return Center(child: CircularProgressIndicator());
+                }
+
+                final _photos = snapshot.data!;
+
+                return Expanded(
+                  child: GridView.builder(
+                    padding: EdgeInsets.all(16),
+                    itemCount: _photos.length,
+                    // shrinkWrap: true를 쓸지 Expanded를 쓸지 선택
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 16,
+                        crossAxisSpacing: 16),
+                    itemBuilder: (context, index) {
+                      return PhotoWidget(
+                        photo: _photos[index],
+                      );
+                    },
+                  ),
                 );
-              },
-            ),
-          ),
+              }),
         ],
       ),
     );
