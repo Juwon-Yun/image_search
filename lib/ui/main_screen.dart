@@ -21,7 +21,8 @@ class _MainScreenState extends State<MainScreen> {
   // final api = PixabayApi();
 
   // 의존성 분리
-  // 1. 의존성 모듈을 인자로 받는다.
+  // 1. 의존성 모듈을 인자로 받는다 -> 분리는 되지만 좋은방법은 아니다.
+  // 2. InheritedWidget으로 의존성을 주입한다.
 
   List<Photo> _photos = [];
 
@@ -40,7 +41,7 @@ class _MainScreenState extends State<MainScreen> {
         centerTitle: true,
         backgroundColor: Colors.white,
         title: Text(
-          '이미지 검색 앱',
+          '이미지 검색',
           style: TextStyle(color: Colors.black),
         ),
         elevation: 0,
