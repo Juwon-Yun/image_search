@@ -4,7 +4,7 @@ import 'package:search_image_app/models/photo.dart';
 import 'package:search_image_app/ui/main_view_model.dart';
 
 // test는 test할 객체가 어떠한 의존하는 객체에 의해서 결과값이 변경되는 경우의 수를 두면 안된다.
-
+// 그래서 기존 PixabayApi 인스턴스를 바로 받던 것을 추상화해 interface를 받는다.
 void main() {
   test('Stream이 잘 작동해야 한다', () async {
     // given
