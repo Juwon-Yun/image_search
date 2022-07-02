@@ -20,4 +20,16 @@ class PixabayApi implements PhotoApiRepository {
     Iterable hits = jsonResponse['hits'];
     return hits.map((e) => Photo.fromJson(e)).toList();
   }
+
+  Future<List<Photo>> fetchMokitoHttpTest(String query,
+      {http.Client? client}) async {
+    client ??= http.Client();
+
+    final response = await http
+        .get(Uri.parse('$baseUrl?key=$key&q=$query&image_type=photo'));
+    Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+
+    Iterable hits = jsonResponse['hits'];
+    return hits.map((e) => Photo.fromJson(e)).toList();
+  }
 }
