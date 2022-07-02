@@ -18,6 +18,9 @@ dependencies:
 
   json_annotation: ^4.5.0
 
+  # use for hash equals operator
+  equatable: ^2.0.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
