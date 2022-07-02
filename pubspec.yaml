@@ -16,7 +16,7 @@ dependencies:
 
   http: ^0.13.4
 
-
+  json_annotation: ^4.5.0
 
 dev_dependencies:
   flutter_test:
@@ -24,6 +24,10 @@ dev_dependencies:
 
   build_runner: ^2.1.11
   mockito: ^5.2.0
+
+  # use for build
+  json_serializable: ^6.2.0
+
 
 flutter:
 
