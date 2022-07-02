@@ -9,7 +9,8 @@ import 'pixabay_api_test.mocks.dart';
 // https://docs.flutter.dev/cookbook/testing/unit/mocking
 
 // [] 에 들어있는 객체를 runner 명령어로 mock 객체를 만들어 테스트한다.
-// command line: flutter pub run build_runner build
+// command line: flutter pub run build_runner build,
+//               flutter test
 @GenerateMocks([http.Client])
 void main() {
   test('Pixabay 응답 데이터를 잘 가져와야 한다.', () async {
