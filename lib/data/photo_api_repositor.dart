@@ -4,6 +4,8 @@ import 'package:search_image_app/data/photo_api_repository.dart';
 import 'package:search_image_app/models/photo.dart';
 import 'package:http/http.dart' as http;
 
+import '../models/photo_json_serializable.dart';
+
 class PixabayApi implements PhotoApiRepository {
   static const baseUrl = 'https://pixabay.com/api/';
   static const key = '28295875-bec5cbfe0df05eb894ac5b990';
@@ -21,7 +23,7 @@ class PixabayApi implements PhotoApiRepository {
     return hits.map((e) => Photo.fromJson(e)).toList();
   }
 
-  Future<List<Photo>> fetchMokitoHttpTest(String query,
+  Future<List<PhotoWithJsonSerializable>> fetchMokitoHttpTest(String query,
       {http.Client? client}) async {
     client ??= http.Client();
 
@@ -31,6 +33,6 @@ class PixabayApi implements PhotoApiRepository {
     Map<String, dynamic> jsonResponse = jsonDecode(response.body);
 
     Iterable hits = jsonResponse['hits'];
-    return hits.map((e) => Photo.fromJson(e)).toList();
+    return hits.map((e) => PhotoWithJsonSerializable.fromJson(e)).toList();
   }
 }
