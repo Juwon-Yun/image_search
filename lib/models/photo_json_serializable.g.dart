@@ -11,7 +11,7 @@ PhotoWithJsonSerializable _$PhotoWithJsonSerializableFromJson(
     PhotoWithJsonSerializable(
       id: json['id'] as int,
       tags: json['tags'] as String,
-      previewUrl: json['previewUrl'] as String,
+      previewUrl: json['previewURL'] as String,
     );
 
 Map<String, dynamic> _$PhotoWithJsonSerializableToJson(
@@ -19,5 +19,5 @@ Map<String, dynamic> _$PhotoWithJsonSerializableToJson(
     <String, dynamic>{
       'id': instance.id,
       'tags': instance.tags,
-      'previewUrl': instance.previewUrl,
+      'previewURL': instance.previewUrl,
     };
