@@ -18,4 +18,4 @@ mokito 패키지를 이용해 Client 가짜 객체를 만들어 PixabayApi를 �
 
 기존에 직접 입력한 model 중 photo 객체를 JsonSerializable 패키지를 이용해 json 직렬화와 역직렬화에 필요한 코드를 자동으로 생성하였다.
 
-Equatable 패키지를 이용해 equals, hashCode를 재정의하고 상속받은 객체를 cost 객체 (불변 객체)로 만들어 주었다.
+Equatable 패키지를 이용해 equals, hashCode를 재정의하고 상속받은 객체를 const 객체 (불변 객체)로 만들어 주었다.
