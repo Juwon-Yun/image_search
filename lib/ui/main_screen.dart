@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:search_image_app/data/photo_provider.dart';
 import 'package:search_image_app/models/photo.dart';
+import 'package:search_image_app/ui/main_view_model.dart';
 import 'package:search_image_app/ui/widget/photo_widget.dart';
 
 class MainScreen extends StatefulWidget {
@@ -35,7 +37,11 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final mainViewModel = PhotoProvider.of(context).mainViewModel;
+    // final mainViewModel = PhotoProvider.of(context).mainViewModel;
+
+    // api가 Stream으로 제공되기때문에 watch를 사용해도 똑같이 나온다.
+    // final mainViewModel = Provider.of<MainViewModel>(context);
+    final mainViewModel = context.watch<MainViewModel>();
 
     return Scaffold(
       appBar: AppBar(
