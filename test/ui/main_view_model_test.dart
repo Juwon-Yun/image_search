@@ -5,6 +5,8 @@ import 'package:search_image_app/ui/main_view_model.dart';
 
 // test는 test할 객체가 어떠한 의존하는 객체에 의해서 결과값이 변경되는 경우의 수를 두면 안된다.
 // 그래서 기존 PixabayApi 인스턴스를 바로 받던 것을 추상화해 interface를 받는다.
+
+// flutter test -commend line
 void main() {
   test('Stream이 잘 작동해야 한다', () async {
     // given
@@ -12,7 +14,7 @@ void main() {
 
     // when
     await viewModel.fetch('apple');
-    await viewModel.fetch('iphone');
+    // await viewModel.fetch('iphone');
 
     final result = fakeJson.map((e) => Photo.fromJson(e)).toList();
 
@@ -21,17 +23,19 @@ void main() {
     //   void clear() {
     //     throw new UnsupportedError("Cannot clear an unmodifiable list");
     //   }
-    viewModel.photos.clear();
+    // viewModel.photos.clear();
 
     // then
     expect(
-        viewModel.photoStream,
-        emitsInOrder([
-          // isA<List<Photo>>(),
-          equals([]),
-          equals(result),
-          equals(result),
-        ]));
+      viewModel.photos,
+      // emitsInOrder([
+      //   // isA<List<Photo>>(),
+      //   equals([]),
+      //   equals(result),
+      //   equals(result),
+      // ]),
+      result,
+    );
   }, timeout: const Timeout(Duration(seconds: 10)));
 }
 
