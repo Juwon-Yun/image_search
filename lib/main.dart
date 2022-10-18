@@ -22,7 +22,7 @@ class MainApp extends StatelessWidget {
       //   mainViewModel: MainViewModel(repository: PixabayApi()),
       //   child: MainScreen(),
       // ),
-      home: Provider(
+      home: ChangeNotifierProvider(
         create: (_) => MainViewModel(repository: PixabayApi()),
         child: MainScreen(),
       ),

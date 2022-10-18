@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:search_image_app/data/photo_api_repository.dart';
@@ -10,7 +11,10 @@ class MainViewModel with ChangeNotifier {
 
   List<Photo> _photos = [];
 
-  List<Photo> get photos => _photos;
+  // List<Photo> get photos => _photos;
+
+  // UnmodifiableListView 타입을 이용해 구현체에서 clear(), add() 를 막는다.
+  UnmodifiableListView<Photo> get photos => UnmodifiableListView(_photos);
 
   MainViewModel({required this.repository});
 

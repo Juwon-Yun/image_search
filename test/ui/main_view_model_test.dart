@@ -16,6 +16,13 @@ void main() {
 
     final result = fakeJson.map((e) => Photo.fromJson(e)).toList();
 
+    // dart에서 문법 제약사항 특성상 clear() 메소드를 없애진 못하고 Error를 던진다.
+    //  This operation is not supported by an unmodifiable list. */
+    //   void clear() {
+    //     throw new UnsupportedError("Cannot clear an unmodifiable list");
+    //   }
+    viewModel.photos.clear();
+
     // then
     expect(
         viewModel.photoStream,

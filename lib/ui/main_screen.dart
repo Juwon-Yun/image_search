@@ -78,32 +78,20 @@ class _MainScreenState extends State<MainScreen> {
               ),
             ),
           ),
-          StreamBuilder<List<Photo>>(
-              stream: mainViewModel.photoStream,
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return Center(child: CircularProgressIndicator());
-                }
-
-                final _photos = snapshot.data!;
-
-                return Expanded(
-                  child: GridView.builder(
-                    padding: EdgeInsets.all(16),
-                    itemCount: _photos.length,
-                    // shrinkWrap: true를 쓸지 Expanded를 쓸지 선택
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        mainAxisSpacing: 16,
-                        crossAxisSpacing: 16),
-                    itemBuilder: (context, index) {
-                      return PhotoWidget(
-                        photo: _photos[index],
-                      );
-                    },
-                  ),
+          Expanded(
+            child: GridView.builder(
+              padding: EdgeInsets.all(16),
+              itemCount: mainViewModel.photos.length,
+              // shrinkWrap: true를 쓸지 Expanded를 쓸지 선택
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2, mainAxisSpacing: 16, crossAxisSpacing: 16),
+              itemBuilder: (context, index) {
+                return PhotoWidget(
+                  photo: mainViewModel.photos[index],
                 );
-              }),
+              },
+            ),
+          ),
         ],
       ),
     );
