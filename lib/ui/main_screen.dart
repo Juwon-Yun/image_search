@@ -41,8 +41,9 @@ class _MainScreenState extends State<MainScreen> {
 
     // api가 Stream으로 제공되기때문에 watch를 사용해도 똑같이 나온다.
     // final mainViewModel = Provider.of<MainViewModel>(context);
-    final mainViewModel = context.watch<MainViewModel>();
+    // final mainViewModel = context.watch<MainViewModel>();
 
+    // streambuilder를 없앴기 때문에 지금은 전체 build 가 다시 그려진다.
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -65,7 +66,10 @@ class _MainScreenState extends State<MainScreen> {
                 ),
                 suffixIcon: IconButton(
                   onPressed: () async {
-                    mainViewModel.fetch(_controller.text);
+                    // watch를 없앴기 때문에 read로 대체함.
+                    context.read<MainViewModel>().fetch(_controller.text);
+
+                    // mainViewModel.fetch(_controller.text);
 
                     // final photos = await photoProvider.api
                     //     .fetchImageWithQuery(_controller.text);
@@ -78,19 +82,28 @@ class _MainScreenState extends State<MainScreen> {
               ),
             ),
           ),
-          Expanded(
-            child: GridView.builder(
-              padding: EdgeInsets.all(16),
-              itemCount: mainViewModel.photos.length,
-              // shrinkWrap: true를 쓸지 Expanded를 쓸지 선택
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, mainAxisSpacing: 16, crossAxisSpacing: 16),
-              itemBuilder: (context, index) {
-                return PhotoWidget(
-                  photo: mainViewModel.photos[index],
-                );
-              },
-            ),
+
+          // StreamBuilder를 없애면 Build 위젯 전체를  다시 그리기 때문에
+          // Provider 에서 제공하는 Consumer를 사용한다.
+          Consumer<MainViewModel>(
+            builder: (_, mainViewModel, child) {
+              return Expanded(
+                child: GridView.builder(
+                  padding: EdgeInsets.all(16),
+                  itemCount: mainViewModel.photos.length,
+                  // shrinkWrap: true를 쓸지 Expanded를 쓸지 선택
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 16,
+                      crossAxisSpacing: 16),
+                  itemBuilder: (context, index) {
+                    return PhotoWidget(
+                      photo: mainViewModel.photos[index],
+                    );
+                  },
+                ),
+              );
+            },
           ),
         ],
       ),
