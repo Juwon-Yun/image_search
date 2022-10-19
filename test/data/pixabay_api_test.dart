@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:search_image_app/data/photo_api_repositor.dart';
+import 'package:search_image_app/data/repositor/photo_api_repositor.dart';
 import 'package:http/http.dart' as http;
 
 import 'pixabay_api_test.mocks.dart';

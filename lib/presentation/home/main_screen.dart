@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:search_image_app/data/photo_provider.dart';
-import 'package:search_image_app/models/photo.dart';
-import 'package:search_image_app/ui/main_view_model.dart';
-import 'package:search_image_app/ui/widget/photo_widget.dart';
+import 'package:search_image_app/domain/model/photo.dart';
+import 'package:search_image_app/presentation/home/main_view_model.dart';
+import 'package:search_image_app/presentation/home/components/photo_widget.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);

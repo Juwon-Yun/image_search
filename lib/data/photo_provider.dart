@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:search_image_app/ui/main_view_model.dart';
+import 'package:search_image_app/presentation/home/main_view_model.dart';
 
 // InheritedWidget 작성법
 class PhotoProvider extends InheritedWidget {

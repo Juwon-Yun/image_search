@@ -1,3 +1,5 @@
+// flutter pub run build_runner build
+
 class Photo {
   Photo({
     required this.id,

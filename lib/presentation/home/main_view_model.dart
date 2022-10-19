@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
-import 'package:search_image_app/data/photo_api_repository.dart';
-import 'package:search_image_app/models/photo.dart';
+import 'package:search_image_app/domain/repository/photo_api_repository.dart';
+import 'package:search_image_app/domain/model/photo.dart';
 
 // api -> repository로 바뀌면서 관계를 없앴다.
 class MainViewModel with ChangeNotifier {
