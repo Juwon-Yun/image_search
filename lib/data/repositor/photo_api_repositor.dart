@@ -15,13 +15,17 @@ class PixabayApi implements PhotoApiRepository {
 
   @override
   Future<List<Photo>> fetchImageWithQuery(String query) async {
-    final response = await http
-        .get(Uri.parse('$baseUrl?key=$key&q=$query&image_type=photo'));
+    try {
+      final response = await http
+          .get(Uri.parse('$baseUrl?key=$key&q=$query&image_type=photo'));
 
-    Map<String, dynamic> jsonResponse = jsonDecode(response.body);
+      Map<String, dynamic> jsonResponse = jsonDecode(response.body);
 
-    Iterable hits = jsonResponse['hits'];
-    return hits.map((e) => Photo.fromJson(e)).toList();
+      Iterable hits = jsonResponse['hits'];
+      return hits.map((e) => Photo.fromJson(e)).toList();
+    } catch (e) {
+      return [];
+    }
   }
 
   Future<List<PhotoWithJsonSerializable>> fetchMokitoHttpTest(String query,
