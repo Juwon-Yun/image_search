@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
+import 'package:search_image_app/data/data_source/result_freezed.dart';
 import 'package:search_image_app/domain/repository/photo_api_repository.dart';
 import 'package:search_image_app/domain/model/photo.dart';
 
@@ -27,7 +28,15 @@ class MainViewModel with ChangeNotifier {
   // }
   Future<void> fetch(String query) async {
     final result = await repository.fetchImageWithQuery(query);
-    _photos = result;
-    notifyListeners();
+
+    // when 키워드로 휴먼 에러를 방지한다.
+    result.when(success: (list) {
+      _photos = list.toList();
+      notifyListeners();
+    }, error: (message) {
+      Result.error(message);
+    });
+
+    // _photos = result;
   }
 }
