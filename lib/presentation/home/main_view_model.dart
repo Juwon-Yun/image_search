@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:search_image_app/data/data_source/result_freezed.dart';
 import 'package:search_image_app/domain/repository/photo_api_repository.dart';
 import 'package:search_image_app/domain/model/photo.dart';
+import 'package:search_image_app/presentation/home/home_ui_event.dart';
 
 // api -> repository로 바뀌면서 관계를 없앴다.
 class MainViewModel with ChangeNotifier {
@@ -16,6 +17,11 @@ class MainViewModel with ChangeNotifier {
 
   // UnmodifiableListView 타입을 이용해 구현체에서 clear(), add() 를 막는다.
   UnmodifiableListView<Photo> get photos => UnmodifiableListView(_photos);
+
+  // HomeUiEvent 를 처리하는 stream 컨트롤러 생성
+  final _eventController = StreamController<HomeUiEvent>();
+
+  Stream<HomeUiEvent> get eventStream => _eventController.stream;
 
   MainViewModel({required this.repository});
 
@@ -34,7 +40,8 @@ class MainViewModel with ChangeNotifier {
       _photos = list.toList();
       notifyListeners();
     }, error: (message) {
-      Result.error(message);
+      _eventController.add(HomeUiEvent.showSnackBar(message));
+      // Result.error(message);
     });
 
     // _photos = result;
