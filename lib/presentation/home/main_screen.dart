@@ -30,6 +30,25 @@ class _MainScreenState extends State<MainScreen> {
   // List<Photo> _photos = [];
 
   @override
+  void initState() {
+    super.initState();
+
+    // 극히 짧은 딜레이는 주는 꼼수
+    // stateful에서 사용하는 꼼수
+    Future.microtask(() {
+      // initState에서 watch를 쓰면안됨. read로 단발성으로 사용한다.
+      final viewModel = context.read<MainViewModel>();
+      viewModel.eventStream.listen((event) {
+        event.when(showSnackBar: (message) {
+          final snackBar = SnackBar(content: Text(message));
+          // 스낵바 쓰는 방법 바뀜.
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        });
+      });
+    });
+  }
+
+  @override
   void dispose() {
     _controller.dispose();
     super.dispose();
