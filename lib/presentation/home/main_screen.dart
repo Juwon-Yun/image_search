@@ -1,8 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:search_image_app/data/photo_provider.dart';
-import 'package:search_image_app/domain/model/photo.dart';
 import 'package:search_image_app/presentation/home/main_view_model.dart';
 import 'package:search_image_app/presentation/home/components/photo_widget.dart';
 
@@ -15,6 +15,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   final _controller = TextEditingController();
+  StreamSubscription? _subscription;
 
   // MainScreen은 PixabayApi 의존성을 가지고 있는 화면이다.
   // 분리해줘야함.
@@ -38,7 +39,8 @@ class _MainScreenState extends State<MainScreen> {
     Future.microtask(() {
       // initState에서 watch를 쓰면안됨. read로 단발성으로 사용한다.
       final viewModel = context.read<MainViewModel>();
-      viewModel.eventStream.listen((event) {
+
+      _subscription = viewModel.eventStream.listen((event) {
         event.when(showSnackBar: (message) {
           final snackBar = SnackBar(content: Text(message));
           // 스낵바 쓰는 방법 바뀜.
@@ -50,6 +52,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   void dispose() {
+    _subscription?.cancel();
     _controller.dispose();
     super.dispose();
   }
@@ -106,22 +109,24 @@ class _MainScreenState extends State<MainScreen> {
           // Provider 에서 제공하는 Consumer를 사용한다.
           Consumer<MainViewModel>(
             builder: (_, mainViewModel, child) {
-              return Expanded(
-                child: GridView.builder(
-                  padding: EdgeInsets.all(16),
-                  itemCount: mainViewModel.photos.length,
-                  // shrinkWrap: true를 쓸지 Expanded를 쓸지 선택
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      mainAxisSpacing: 16,
-                      crossAxisSpacing: 16),
-                  itemBuilder: (context, index) {
-                    return PhotoWidget(
-                      photo: mainViewModel.photos[index],
+              return mainViewModel.isLoading
+                  ? const CircularProgressIndicator()
+                  : Expanded(
+                      child: GridView.builder(
+                        padding: EdgeInsets.all(16),
+                        itemCount: mainViewModel.photos.length,
+                        // shrinkWrap: true를 쓸지 Expanded를 쓸지 선택
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 16,
+                            crossAxisSpacing: 16),
+                        itemBuilder: (context, index) {
+                          return PhotoWidget(
+                            photo: mainViewModel.photos[index],
+                          );
+                        },
+                      ),
                     );
-                  },
-                ),
-              );
             },
           ),
         ],

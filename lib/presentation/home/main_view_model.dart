@@ -18,6 +18,8 @@ class MainViewModel with ChangeNotifier {
   // UnmodifiableListView 타입을 이용해 구현체에서 clear(), add() 를 막는다.
   UnmodifiableListView<Photo> get photos => UnmodifiableListView(_photos);
 
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
   // HomeUiEvent 를 처리하는 stream 컨트롤러 생성
   final _eventController = StreamController<HomeUiEvent>();
 
@@ -33,8 +35,10 @@ class MainViewModel with ChangeNotifier {
   //   _photoScreenController.add(result);
   // }
   Future<void> fetch(String query) async {
-    final result = await repository.fetchImageWithQuery(query);
+    _isLoading = true;
+    notifyListeners();
 
+    final result = await repository.fetchImageWithQuery(query);
     // when 키워드로 휴먼 에러를 방지한다.
     result.when(success: (list) {
       _photos = list.toList();
@@ -43,6 +47,8 @@ class MainViewModel with ChangeNotifier {
       _eventController.add(HomeUiEvent.showSnackBar(message));
       // Result.error(message);
     });
+    _isLoading = false;
+    notifyListeners();
 
     // _photos = result;
   }
