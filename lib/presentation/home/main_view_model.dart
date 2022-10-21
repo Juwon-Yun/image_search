@@ -2,14 +2,18 @@ import 'dart:async';
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
-import 'package:search_image_app/data/data_source/result_freezed.dart';
 import 'package:search_image_app/domain/repository/photo_api_repository.dart';
 import 'package:search_image_app/domain/model/photo.dart';
 import 'package:search_image_app/presentation/home/home_ui_event.dart';
+import 'package:search_image_app/presentation/home/main_state.dart';
 
 // api -> repository로 바뀌면서 관계를 없앴다.
 class MainViewModel with ChangeNotifier {
   final PhotoApiRepository repository;
+
+  MainState _state = MainState([], false);
+
+  MainState get state => _state;
 
   List<Photo> _photos = [];
 
