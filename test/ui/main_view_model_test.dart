@@ -28,10 +28,11 @@ void main() {
 
     // then
     expect(
-      viewModel.state.photos,
+      // viewModel.state.photos,
+      viewModel.freezedState.photos,
       // emitsInOrder([
       //   // isA<List<Photo>>(),
-      //   equals([]),
+      //   equals([]),g
       //   equals(result),
       //   equals(result),
       // ]),

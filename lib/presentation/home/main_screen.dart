@@ -110,12 +110,14 @@ class _MainScreenState extends State<MainScreen> {
           // Provider 에서 제공하는 Consumer를 사용한다.
           Consumer<MainViewModel>(
             builder: (_, mainViewModel, child) {
-              return mainViewModel.state.isLoading
+              // return mainViewModel.state.isLoading
+              return mainViewModel.freezedState.isLoading
                   ? const CircularProgressIndicator()
                   : Expanded(
                       child: GridView.builder(
                         padding: EdgeInsets.all(16),
-                        itemCount: mainViewModel.state.photos.length,
+                        // itemCount: mainViewModel.state.photos.length,
+                        itemCount: mainViewModel.freezedState.photos.length,
                         // shrinkWrap: true를 쓸지 Expanded를 쓸지 선택
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
@@ -123,7 +125,8 @@ class _MainScreenState extends State<MainScreen> {
                             crossAxisSpacing: 16),
                         itemBuilder: (context, index) {
                           return PhotoWidget(
-                            photo: mainViewModel.state.photos[index],
+                            // photo: mainViewModel.state.photos[index],
+                            photo: mainViewModel.freezedState.photos[index],
                           );
                         },
                       ),

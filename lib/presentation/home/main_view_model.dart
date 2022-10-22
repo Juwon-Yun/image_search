@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:search_image_app/domain/repository/photo_api_repository.dart';
+import 'package:search_image_app/presentation/home/freezed_main_state.dart';
 import 'package:search_image_app/presentation/home/home_ui_event.dart';
 import 'package:search_image_app/presentation/home/main_state.dart';
 
@@ -9,9 +10,13 @@ import 'package:search_image_app/presentation/home/main_state.dart';
 class MainViewModel with ChangeNotifier {
   final PhotoApiRepository repository;
 
-  MainState _state = MainState([], false);
+  // MainState _state = MainState([], false);
+  //
+  // MainState get state => _state;
 
-  MainState get state => _state;
+  MainStateFreezed _freezedState = MainStateFreezed([], false);
+
+  MainStateFreezed get freezedState => _freezedState;
 
   // List<Photo> _photos = [];
 
@@ -44,7 +49,10 @@ class MainViewModel with ChangeNotifier {
     // state.isLoading = true;
 
     // 객체 복사 방식으로 재할당을 막는다.
-    _state = state.copy(isLoading: true);
+    // _state = state.copy(isLoading: true);
+
+    // freezed 에서는 기본으로 copy 기능을 제공한다.
+    _freezedState = freezedState.copyWith(isLoading: true);
 
     // _isLoading = true;
     notifyListeners();
@@ -54,7 +62,8 @@ class MainViewModel with ChangeNotifier {
     result.when(success: (list) {
       // _photos = list.toList();
       // state.photos = list;
-      _state = state.copy(photos: list);
+      // _state = state.copy(photos: list);
+      _freezedState = freezedState.copyWith(photos: list);
 
       notifyListeners();
     }, error: (message) {
@@ -62,7 +71,8 @@ class MainViewModel with ChangeNotifier {
       // Result.error(message);
     });
     // state.isLoading = false;
-    _state = state.copy(isLoading: false);
+    // _state = state.copy(isLoading: false);
+    _freezedState = freezedState.copyWith(isLoading: false);
 
     // _isLoading = false;
     notifyListeners();
