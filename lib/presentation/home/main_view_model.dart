@@ -38,7 +38,14 @@ class MainViewModel with ChangeNotifier {
   //   _photoScreenController.add(result);
   // }
   Future<void> fetch(String query) async {
-    state.isLoading = true;
+    // ui 에서도 수정이 되는게 문제다.
+    // 잘만들어도 남들이 망칠 수 있음.
+    // viewModel은 ui에서 수정이 안되게해야함.
+    // state.isLoading = true;
+
+    // 객체 복사 방식으로 재할당을 막는다.
+    _state = state.copy(isLoading: true);
+
     // _isLoading = true;
     notifyListeners();
 
@@ -46,13 +53,17 @@ class MainViewModel with ChangeNotifier {
     // when 키워드로 휴먼 에러를 방지한다.
     result.when(success: (list) {
       // _photos = list.toList();
-      state.photos = list;
+      // state.photos = list;
+      _state = state.copy(photos: list);
+
       notifyListeners();
     }, error: (message) {
       _eventController.add(HomeUiEvent.showSnackBar(message));
       // Result.error(message);
     });
-    state.isLoading = false;
+    // state.isLoading = false;
+    _state = state.copy(isLoading: false);
+
     // _isLoading = false;
     notifyListeners();
 
