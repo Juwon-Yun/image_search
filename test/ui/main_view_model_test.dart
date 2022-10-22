@@ -28,7 +28,7 @@ void main() {
 
     // then
     expect(
-      viewModel.photos,
+      viewModel.state.photos,
       // emitsInOrder([
       //   // isA<List<Photo>>(),
       //   equals([]),

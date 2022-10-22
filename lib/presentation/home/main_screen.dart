@@ -60,6 +60,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     // final mainViewModel = PhotoProvider.of(context).mainViewModel;
+    // final state = mainViewModel.state;
 
     // api가 Stream으로 제공되기때문에 watch를 사용해도 똑같이 나온다.
     // final mainViewModel = Provider.of<MainViewModel>(context);
@@ -109,12 +110,12 @@ class _MainScreenState extends State<MainScreen> {
           // Provider 에서 제공하는 Consumer를 사용한다.
           Consumer<MainViewModel>(
             builder: (_, mainViewModel, child) {
-              return mainViewModel.isLoading
+              return mainViewModel.state.isLoading
                   ? const CircularProgressIndicator()
                   : Expanded(
                       child: GridView.builder(
                         padding: EdgeInsets.all(16),
-                        itemCount: mainViewModel.photos.length,
+                        itemCount: mainViewModel.state.photos.length,
                         // shrinkWrap: true를 쓸지 Expanded를 쓸지 선택
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
@@ -122,7 +123,7 @@ class _MainScreenState extends State<MainScreen> {
                             crossAxisSpacing: 16),
                         itemBuilder: (context, index) {
                           return PhotoWidget(
-                            photo: mainViewModel.photos[index],
+                            photo: mainViewModel.state.photos[index],
                           );
                         },
                       ),
