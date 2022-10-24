@@ -10,11 +10,18 @@ import 'package:search_image_app/presentation/home/main_view_model.dart';
 // flutter test -commend line
 void main() {
   test('Stream이 잘 작동해야 한다', () async {
+    // FIXME: refactor v3
     // given
-    final viewModel = MainViewModel(repository: FakePhotoApiRepository());
+    // final viewModel = MainViewModel(repository: FakePhotoApiRepository());
+
+    // FIXME: refactor v4
+    GetPhotosUseCase getPhotosUseCase =
+        GetPhotosUseCase(repository: FakePhotoApiRepository());
+
+    final temp = await getPhotosUseCase.execute('apple').then((value) => value);
 
     // when
-    await viewModel.fetch('apple');
+    // await viewModel.fetch('apple');
     // await viewModel.fetch('iphone');
 
     final result = fakeJson.map((e) => Photo.fromJson(e)).toList();
@@ -28,8 +35,14 @@ void main() {
 
     // then
     expect(
+      // FIXME: refactor v2
       // viewModel.state.photos,
-      viewModel.freezedState.photos,
+
+      // FIXME: refactor v3
+      // viewModel.freezedState.photos,
+
+      // FIXME: refactor v4
+      temp,
       // emitsInOrder([
       //   // isA<List<Photo>>(),
       //   equals([]),g
@@ -47,6 +60,23 @@ class FakePhotoApiRepository extends PhotoApiRepository {
     Future.delayed(const Duration(seconds: 1));
 
     return Result.success(fakeJson.map((e) => Photo.fromJson(e)).toList());
+  }
+}
+
+class GetPhotosUseCase {
+  final PhotoApiRepository repository;
+
+  GetPhotosUseCase({required this.repository});
+
+  Future<Result<List<Photo>>> execute(String query) async {
+    final result = await repository.fetchImageWithQuery(query);
+
+    return result.when(success: (photos) {
+      // 성공했을 때 3개만 보여주는 가정.
+      return Result.success(photos.sublist(0, 3));
+    }, error: (message) {
+      return Result.error(message);
+    });
   }
 }
 
