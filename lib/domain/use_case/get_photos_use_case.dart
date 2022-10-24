@@ -10,6 +10,13 @@ class GetPhotosUseCase {
   GetPhotosUseCase({required this.repository});
 
   Future<Result<List<Photo>>> execute(String query) async {
-    return await repository.fetchImageWithQuery(query);
+    final result = await repository.fetchImageWithQuery(query);
+
+    return result.when(success: (photos) {
+      // 성공했을 때 3개만 보여주는 가정.
+      return Result.success(photos.sublist(0, 3));
+    }, error: (message) {
+      return Result.error(message);
+    });
   }
 }
