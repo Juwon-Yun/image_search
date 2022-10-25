@@ -50,7 +50,10 @@ class MainViewModel with ChangeNotifier {
   //   final result = await repository.fetchImageWithQuery(query);
   //   _photoScreenController.add(result);
   // }
+  // VoidCallback callback;
+
   Future<void> fetch(String query) async {
+    // callback();
     // ui 에서도 수정이 되는게 문제다.
     // 잘만들어도 남들이 망칠 수 있음.
     // viewModel은 ui에서 수정이 안되게해야함.
@@ -66,7 +69,11 @@ class MainViewModel with ChangeNotifier {
     notifyListeners();
 
     // FIXME: refactor v4
-    final Result<List<Photo>> result = await getPhotosUseCase.execute(query);
+    // final Result<List<Photo>> result = await getPhotosUseCase.execute(query);
+
+    // call 함수는 생략이 가능하다.
+    // FIXME: refactor v5
+    final Result<List<Photo>> result = await getPhotosUseCase(query);
 
     // FIXME: refactor v3
     // final result = await repository.fetchImageWithQuery(query);

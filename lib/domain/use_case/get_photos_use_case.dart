@@ -13,7 +13,16 @@ class GetPhotosUseCase {
     final result = await repository.fetchImageWithQuery(query);
 
     return result.when(success: (photos) {
-      // 성공했을 때 3개만 보여주는 가정.
+      return Result.success(photos.sublist(0, 3));
+    }, error: (message) {
+      return Result.error(message);
+    });
+  }
+
+  Future<Result<List<Photo>>> call(String query) async {
+    final result = await repository.fetchImageWithQuery(query);
+
+    return result.when(success: (photos) {
       return Result.success(photos.sublist(0, 3));
     }, error: (message) {
       return Result.error(message);
