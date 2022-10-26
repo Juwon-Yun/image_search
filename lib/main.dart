@@ -32,7 +32,8 @@ class MainApp extends StatelessWidget {
 
         // FIXME: refactor v4
         create: (_) => MainViewModel(
-            getPhotosUseCase: GetPhotosUseCase(repository: PixabayApi())),
+          getPhotosUseCase: GetPhotosUseCase(repository: PixabayApi()),
+        ),
         child: MainScreen(),
       ),
     );
