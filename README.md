@@ -7,7 +7,12 @@
 
 ![search_imgage_intro](https://user-images.githubusercontent.com/85836879/176201825-688daacb-b543-4ef0-be7a-ef5189a4583d.gif)
 
+
+
 ### 💡 Tips
+로버트 C 마틴이 만든 클린 아키텍처 (클린 코드 저자)
+
+![img.png](img.png)
 
 ### 📖 Review
 PixabayApi 클래스의 의존성을 화면 내부에서 구현하지 않고 InheritedWidget을 상속받아 widget tree에 있는 PixabayApi 클래스를 사용하도록 주입하였다. 
