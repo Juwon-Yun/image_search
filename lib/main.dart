@@ -22,6 +22,10 @@ class MainApp extends StatelessWidget {
       //   mainViewModel: MainViewModel(repository: PixabayApi()),
       //   child: MainScreen(),
       // ),
+
+      // FIXME: refactor v5
+      // 여기서 의존성 주입하는 로직을 별도로 작성하는게 좀 더 좋다.
+      // 확장성을 고려하자
       home: ChangeNotifierProvider(
         // FIXME: refactor v3
         // create: (_) => MainViewModel(repository: PixabayApi()),
