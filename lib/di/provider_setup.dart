@@ -5,12 +5,15 @@ import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:http/http.dart' as http;
 import 'package:search_image_app/data/repositor/photo_api_repositor.dart';
-import 'package:search_image_app/domain/repository/photo_api_repository.dart';
 import 'package:search_image_app/domain/use_case/get_photos_use_case.dart';
 import 'package:search_image_app/presentation/home/main_view_model.dart';
 
 //1. Provider 전체
-List<SingleChildWidget> globalProviders = [];
+List<SingleChildWidget> globalProviders = [
+  ...independentModels,
+  ...dependentModels,
+  ...viewModels,
+];
 
 //2. 어디에도 의존하지않는 모델
 List<SingleChildWidget> independentModels = [
@@ -24,7 +27,8 @@ List<SingleChildWidget> independentModels = [
 List<SingleChildWidget> dependentModels = [
   // <T, P> T -> 의존할 모델, P -> 만들 모델
   ProxyProvider<http.Client, PixabayApi>(
-    update: (context, client, pixabayApi) => PixabayApi(client),
+    // update: (context, client, pixabayApi) => PixabayApi(client),
+    update: (context, client, pixabayApi) => PixabayApi(),
   ),
   // ProxyProvider<PixabayApi, PhotoApiRepository>(
   //   update: (context, api, pixabayapi) => PhotoApiRepositor(api),
